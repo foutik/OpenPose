@@ -16,6 +16,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tensorflow Openpose Inference')
     parser.add_argument('--imgpath', type=str, default='./images/wywh.jpg')
     parser.add_argument('--input-width', type=int, default=656)
+    parser.add_argument('--modelpath', type=str, default='openpose_pipeline/models/optimized_openpose.pb')
     parser.add_argument('--input-height', type=int, default=368)
     args = parser.parse_args()
 
@@ -26,7 +27,7 @@ if __name__ == '__main__':
     from tensorflow.core.framework import graph_pb2
     graph_def = graph_pb2.GraphDef()
     # Download model from https://www.dropbox.com/s/2dw1oz9l9hi9avg/optimized_openpose.pb
-    with open('models/optimized_openpose.pb', 'rb') as f:
+    with open(args.modelpath, 'rb') as f:
         graph_def.ParseFromString(f.read())
     tf.import_graph_def(graph_def, name='')
 
